@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>tutorial.tdd</groupId>
+  <artifactId>tutorialTddJMeter</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>tutorialTddJMeter</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+	    <groupId>org.junit.platform</groupId>
+	    <artifactId>junit-platform-launcher</artifactId>
+	    <version>1.4.2</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.junit.jupiter</groupId>
+	    <artifactId>junit-jupiter-engine</artifactId>
+	    <version>5.4.2</version>
+	    <scope>test</scope>
+	</dependency>
+</dependencies>
+  
+  <build>
+    <plugins>  
+	    <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>2.19.1</version>
+			    <dependencies>
+			        <dependency>
+			            <groupId>org.junit.platform</groupId>
+			            <artifactId>junit-platform-surefire-provider</artifactId>
+			            <version>1.1.0</version>
+			        </dependency>
+			        <dependency>
+			            <groupId>org.junit.jupiter</groupId>
+			            <artifactId>junit-jupiter-engine</artifactId>
+			            <version>5.4.2</version>
+			        </dependency>
+			    </dependencies>
+			</plugin>
+        <plugin>
+            <groupId>com.lazerycode.jmeter</groupId>
+            <artifactId>jmeter-maven-plugin</artifactId>
+            <version>2.8.1</version>
+            <executions>
+                <execution>
+                    <id>jmeter-tests</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>jmeter</goal>
+                    </goals>
+                    <configuration>
+                        <resultsFileFormat>xml</resultsFileFormat>
+                        <generateReports>true</generateReports>
+                        <jmeterPlugins>
+                            <plugin>
+                                <groupId>kg.apc</groupId>
+                                <artifactId>jmeter-plugins</artifactId>
+                            </plugin>
+                        </jmeterPlugins>
+                        <jmeterExtensions>
+                            <artifact>kg.apc:jmeter-plugins-casutg:2.4</artifact>
+
+                            <artifactId>kg.apc:jmeter-plugins-extras-libs:1.3.1</artifactId>
+
+                        </jmeterExtensions>
+                        <!-- The plugin uses some broken dependencies
+                             An alternative is to set this to true and use excludedArtifacts, see below
+                        -->
+                        <downloadExtensionDependencies>false</downloadExtensionDependencies>
+                    </configuration>
+                </execution>
+            </executions>
+            <dependencies>
+                <dependency>
+                    <groupId>kg.apc</groupId>
+                    <artifactId>jmeter-plugins</artifactId>
+                    <version>1.0.0</version>
+                </dependency>
+            </dependencies>
+        </plugin>
+    </plugins>
+  </build>
+  
+</project>
